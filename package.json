@@ -13,5 +13,11 @@
     "js-yaml": "^3.13.1",
     "superagent": "^5.0.5",
     "cross-spawn": "^6.0.5"
+  },
+  "scripts": {
+    "start": "node main.js"
+  },
+  "engines": {
+    "node": "^10.0.0"
   }
 }
