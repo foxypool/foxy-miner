@@ -124,6 +124,6 @@ process.on('uncaughtException', (err) => {
   const startupLine = `Foxy-Miner ${version} initialized. Accepting connections on http://${config.listenAddr}`;
   eventBus.publish('log/info', store.getUseColors() ? chalk.green(startupLine) : startupLine);
 
-  const scavenger = new Scavenger(config.scavengerBinPath);
+  const scavenger = new Scavenger(config.scavengerBinPath, config.scavengerConfigPath);
   await scavenger.start();
 })();
