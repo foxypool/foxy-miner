@@ -1,11 +1,27 @@
 {
   "name": "foxy-miner",
   "version": "1.0.0",
+  "description": "A scavenger wrapper for collision free dual mining.",
+  "keywords": [
+    "burst",
+    "bhd",
+    "poc",
+    "scavenger",
+    "multi-chain",
+    "collision-free",
+    "mining",
+    "foxyminer",
+    "foxy"
+  ],
+  "repository": "https://github.com/felixbrucker/foxy-miner.git",
+  "bugs": "https://github.com/felixbrucker/foxy-miner/issues",
+  "license": "GPL-3.0",
   "dependencies": {
     "@sentry/integrations": "^5.2.0",
     "@sentry/node": "^5.2.0",
     "bignumber.js": "^8.1.1",
     "chalk": "^2.4.2",
+    "commander": "^2.20.0",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
@@ -14,6 +30,10 @@
     "superagent": "^5.0.5",
     "cross-spawn": "^6.0.5"
   },
+  "bin": {
+    "foxy-miner": "./main.js"
+  },
+  "main": "main.js",
   "scripts": {
     "start": "node main.js"
   },

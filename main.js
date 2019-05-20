@@ -7,6 +7,7 @@ const Integrations = require('@sentry/integrations');
 const Koa = require('koa');
 const Router = require('koa-router');
 const Sentry = require('@sentry/node');
+const program = require('commander');
 const blacklistedErrors = require('./lib/blacklisted-errors');
 const eventBus = require('./lib/services/event-bus');
 const logger = require('./lib/services/logger');
@@ -15,6 +16,17 @@ const Proxy = require('./lib/proxy');
 const store = require('./lib/services/store');
 const version = require('./lib/version');
 const Scavenger = require('./lib/scavenger');
+
+program
+  .version(version)
+  .option('--config <config.yaml>', 'The custom config.yaml file path')
+  .parse(process.argv);
+
+if (program.config) {
+  store.configFilePath = program.config;
+}
+
+config.init();
 
 Sentry.init({
   dsn: 'https://2c5b7b184ad44ed99fc457f4442386e9@sentry.io/1462805',
