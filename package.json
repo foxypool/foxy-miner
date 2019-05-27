@@ -28,7 +28,8 @@
     "moment": "^2.24.0",
     "js-yaml": "^3.13.1",
     "superagent": "^5.0.5",
-    "cross-spawn": "^6.0.5"
+    "cross-spawn": "^6.0.5",
+    "socket.io-client": "^2.2.0"
   },
   "bin": {
     "foxy-miner": "./main.js"
