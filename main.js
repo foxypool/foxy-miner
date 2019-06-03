@@ -16,6 +16,7 @@ const Proxy = require('./lib/proxy');
 const store = require('./lib/services/store');
 const version = require('./lib/version');
 const Scavenger = require('./lib/scavenger');
+const startupMessage = require('./lib/startup-message');
 
 program
   .version(version)
@@ -27,6 +28,8 @@ if (program.config) {
 }
 
 config.init();
+
+startupMessage();
 
 Sentry.init({
   dsn: 'https://2c5b7b184ad44ed99fc457f4442386e9@sentry.io/1462805',
@@ -94,6 +97,7 @@ process.on('uncaughtException', (err) => {
           miner: ctx.req.headers['x-miner'],
           capacity: ctx.req.headers['x-capacity'],
           accountKey: ctx.req.headers['x-account'],
+          minerAlias: ctx.req.headers['x-mineralias'] || null,
         };
         const submissionObj = {
           accountId: ctx.query.accountId,
