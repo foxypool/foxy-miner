@@ -98,6 +98,7 @@ process.on('uncaughtException', (err) => {
           capacity: ctx.req.headers['x-capacity'],
           accountKey: ctx.req.headers['x-account'],
           minerAlias: ctx.req.headers['x-mineralias'] || null,
+          color: ctx.req.headers['x-color'] || null,
         };
         const submissionObj = {
           accountId: ctx.query.accountId,
