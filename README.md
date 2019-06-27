@@ -1,6 +1,10 @@
 Foxy-Miner
 ======
 
+[![Software License](https://img.shields.io/badge/license-GPL--3.0-brightgreen.svg?style=flat-square)](LICENSE)
+[![npm](https://img.shields.io/npm/v/foxy-miner.svg?style=flat-square)](https://www.npmjs.com/package/foxy-miner)
+[![npm weekly downloads](https://img.shields.io/npm/dw/foxy-miner.svg?style=flat-square)](https://www.npmjs.com/package/foxy-miner)
+
 ## Prerequisites
 
 - nodejs >= 10, see [here](https://github.com/felixbrucker/foxy-miner/wiki/Installing-nodejs) how to install it
