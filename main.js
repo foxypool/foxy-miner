@@ -16,6 +16,7 @@ const Proxy = require('./lib/proxy');
 const store = require('./lib/services/store');
 const version = require('./lib/version');
 const Scavenger = require('./lib/scavenger');
+const Conqueror = require('./lib/conqueror');
 const startupMessage = require('./lib/startup-message');
 
 program
@@ -141,6 +142,14 @@ process.on('uncaughtException', (err) => {
   const startupLine = `Foxy-Miner ${version} initialized. Accepting connections on http://${config.listenAddr}`;
   eventBus.publish('log/info', store.getUseColors() ? chalk.green(startupLine) : startupLine);
 
-  const scavenger = new Scavenger(config.scavengerBinPath, config.scavengerConfigPath);
-  await scavenger.start();
+  let miner = null;
+  switch (config.minerType) {
+    case 'scavenger':
+      miner = new Scavenger(config.minerBinPath, config.minerConfigPath);
+      break;
+    case 'conqueror':
+      miner = new Conqueror(config.minerBinPath, config.minerConfigPath);
+      break;
+  }
+  await miner.start();
 })();
