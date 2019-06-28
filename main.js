@@ -8,7 +8,6 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const Sentry = require('@sentry/node');
 const program = require('commander');
-const blacklistedErrors = require('./lib/blacklisted-errors');
 const eventBus = require('./lib/services/event-bus');
 const logger = require('./lib/services/logger');
 const config = require('./lib/services/config');
@@ -54,10 +53,6 @@ process.on('uncaughtException', (err) => {
   const app = new Koa();
   app.on('error', err => {
     eventBus.publish('log/error', `Error: ${err.message}`);
-    if (blacklistedErrors.indexOf(err.message) !== -1) {
-      return;
-    }
-    Sentry.captureException(err);
   });
 
   const router = new Router();
