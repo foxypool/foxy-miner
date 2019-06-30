@@ -17,6 +17,7 @@ const version = require('./lib/version');
 const Scavenger = require('./lib/scavenger');
 const Conqueror = require('./lib/conqueror');
 const startupMessage = require('./lib/startup-message');
+const profitabilityService = require('./lib/services/profitability-service');
 
 program
   .version(version)
@@ -57,6 +58,10 @@ process.on('uncaughtException', (err) => {
 
   const router = new Router();
   app.use(bodyParser());
+
+  if (config.useProfitability) {
+    await profitabilityService.init();
+  }
 
   const proxy = new Proxy(config.upstreams);
   await proxy.init();
