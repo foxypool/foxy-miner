@@ -63,7 +63,8 @@ process.on('uncaughtException', (err) => {
     await profitabilityService.init();
   }
 
-  const proxy = new Proxy(config.upstreams);
+  const enabledUpstreams = config.upstreams.filter(upstreamConfig => !upstreamConfig.disabled);
+  const proxy = new Proxy(enabledUpstreams);
   await proxy.init();
 
   router.get('/burst', (ctx) => {
