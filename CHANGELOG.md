@@ -1,3 +1,11 @@
+1.2.0 / 2019-07-02
+==================
+
+* Add support for dynamic prio's based on profitability.
+* Add support for disabling upstreams.
+* Fix possibly outdated miningInfo after reconnecting through socket.io.
+* Rename prio to weight in config to clarify precedence.
+
 1.1.0 / 2019-06-30
 ==================
 
