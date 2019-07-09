@@ -16,6 +16,7 @@ const store = require('./lib/services/store');
 const version = require('./lib/version');
 const Scavenger = require('./lib/scavenger');
 const Conqueror = require('./lib/conqueror');
+const IdleProgram = require('./lib/idle-program');
 const startupMessage = require('./lib/startup-message');
 const profitabilityService = require('./lib/services/profitability-service');
 
@@ -153,4 +154,10 @@ process.on('uncaughtException', (err) => {
       break;
   }
   await miner.start();
+
+  if (config.config.runIdleBinPath) {
+    const idleProgram = new IdleProgram(config.config.runIdleBinPath, config.config.runIdleKillBinPath);
+    eventBus.subscribe('miner/new-round', () => idleProgram.stop());
+    eventBus.subscribe('miner/all-rounds-finished', () => idleProgram.start());
+  }
 })();
