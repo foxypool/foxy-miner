@@ -1,3 +1,12 @@
+1.3.0 / 2019-07-15
+==================
+
+* Add support for `assumeScannedAfter` to force chain switches.
+* Add support for `maxNumberOfChains`.
+* Add support for connection outage detection.
+* Add experimental support for running a program when idling.
+* Fix unicode minerAlias in header when using http upstreams.
+
 1.2.0 / 2019-07-02
 ==================
 

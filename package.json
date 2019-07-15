@@ -1,6 +1,6 @@
 {
   "name": "foxy-miner",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A scavenger wrapper for collision free dual mining.",
   "keywords": [
     "burst",
