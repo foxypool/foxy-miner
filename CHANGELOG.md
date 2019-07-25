@@ -1,3 +1,9 @@
+1.4.0 / 2019-07-25
+==================
+
+* Add support for BOOM rates.
+* Automatically add '/mining' to Foxy-Pool URLs if missing.
+
 1.3.0 / 2019-07-15
 ==================
 
