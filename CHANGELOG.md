@@ -1,3 +1,9 @@
+1.4.1 / 2019-07-26
+==================
+
+* Fix BOOM rate not being updated correctly.
+* Rename minerAlias to accountName.
+
 1.4.0 / 2019-07-25
 ==================
 
