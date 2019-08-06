@@ -1,12 +1,13 @@
 {
   "name": "foxy-miner",
   "version": "1.4.1",
-  "description": "A scavenger wrapper for collision free dual mining.",
+  "description": "A scavenger / conqueror wrapper for collision free multi mining.",
   "keywords": [
     "burst",
     "bhd",
     "poc",
     "scavenger",
+    "conqueror",
     "multi-chain",
     "collision-free",
     "mining",
@@ -32,14 +33,25 @@
     "cross-spawn": "^6.0.5",
     "socket.io-client": "^2.2.0"
   },
+  "devDependencies": {
+    "pkg": "^4.4.0"
+  },
   "bin": {
     "foxy-miner": "./main.js"
   },
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "build": "pkg --out-path builds ."
   },
   "engines": {
     "node": "^10.0.0"
+  },
+  "pkg": {
+    "targets": [
+      "node10-win-x64",
+      "node10-linux-x64",
+      "node10-macos-x64"
+    ]
   }
 }
