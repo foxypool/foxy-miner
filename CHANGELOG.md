@@ -1,3 +1,13 @@
+1.5.0 / 2019-08-06
+==================
+
+* Add setup wizard.
+* Add support for `humanizeDeadlines` option.
+* Add support for HDPool.
+* Add dynamic deadline colors.
+* Add support for accountId colors.
+* Add support for prebuilt binaries.
+
 1.4.1 / 2019-07-26
 ==================
 
