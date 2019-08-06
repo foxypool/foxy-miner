@@ -29,29 +29,29 @@ if (program.config) {
   store.configFilePath = program.config;
 }
 
-config.init();
-
-startupMessage();
-
-Sentry.init({
-  dsn: 'https://2c5b7b184ad44ed99fc457f4442386e9@sentry.io/1462805',
-  release: `foxy-miner@${version}`,
-  attachStacktrace: true,
-  integrations: [
-    new Integrations.Dedupe(),
-    new Integrations.ExtraErrorData(),
-    new Integrations.Transaction(),
-  ],
-});
-
-process.on('unhandledRejection', (err) => {
-  eventBus.publish('log/error', `Error: ${err.message}`);
-});
-process.on('uncaughtException', (err) => {
-  eventBus.publish('log/error', `Error: ${err.message}`);
-});
-
 (async () => {
+  await config.init();
+
+  startupMessage();
+
+  Sentry.init({
+    dsn: 'https://2c5b7b184ad44ed99fc457f4442386e9@sentry.io/1462805',
+    release: `foxy-miner@${version}`,
+    attachStacktrace: true,
+    integrations: [
+      new Integrations.Dedupe(),
+      new Integrations.ExtraErrorData(),
+      new Integrations.Transaction(),
+    ],
+  });
+
+  process.on('unhandledRejection', (err) => {
+    eventBus.publish('log/error', `Error: ${err.message}`);
+  });
+  process.on('uncaughtException', (err) => {
+    eventBus.publish('log/error', `Error: ${err.message}`);
+  });
+
   const app = new Koa();
   app.on('error', err => {
     eventBus.publish('log/error', `Error: ${err.message}`);

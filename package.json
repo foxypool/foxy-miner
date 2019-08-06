@@ -23,15 +23,16 @@
     "bignumber.js": "^9.0.0",
     "chalk": "^2.4.2",
     "commander": "^2.20.0",
+    "cross-spawn": "^6.0.5",
     "hdpool-api": "^1.5.3",
+    "js-yaml": "^3.13.1",
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "moment": "^2.24.0",
-    "js-yaml": "^3.13.1",
-    "superagent": "^5.0.5",
-    "cross-spawn": "^6.0.5",
-    "socket.io-client": "^2.2.0"
+    "prompts": "^2.2.1",
+    "socket.io-client": "^2.2.0",
+    "superagent": "^5.0.5"
   },
   "devDependencies": {
     "pkg": "^4.4.0"
