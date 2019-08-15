@@ -6,6 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
+    - name: Install dependencies
+      uses: actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
+      with:
+        args: ci
+    - name: Audit dependencies
+      uses: actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
+      with:
+        args: audit
     - name: Tag
       uses: actions/bin/filter@9d4ef995a71b0771f438dd7438851858f4a55d0c
       with:
@@ -22,16 +30,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         args: --name Foxy-Miner
-    - name: Install dependencies
-      uses: actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
-      with:
-        args: ci
     - name: Post to Discord
       uses: felixbrucker/github-actions/post-release-in-discord@master
       env:
         FOXY_DISCORD_WEBHOOK_ID: ${{ secrets.FOXY_DISCORD_WEBHOOK_ID }}
         FOXY_DISCORD_WEBHOOK_TOKEN: ${{ secrets.FOXY_DISCORD_WEBHOOK_TOKEN }}
-    - name: Audit dependencies
-      uses: actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437
-      with:
-        args: audit
