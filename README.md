@@ -30,6 +30,7 @@ npm update -g foxy-miner
 ## Donate
 
 - BHD: 33fKEwAHxVwnrhisREFdSNmZkguo76a2ML
+- LHD: 35NfQXpTdqAEGYpJyqteh8Lmn9RXrjN2Jp
 - BOOM: BOOM-BVUD-7VWE-HD7F-6RX4P
 - BURST: BURST-BVUD-7VWE-HD7F-6RX4P
 - DISC: 1F9nVpiA7iKcrpyHCGw6AeqMdU9EebZmrw
