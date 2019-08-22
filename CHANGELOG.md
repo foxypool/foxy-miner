@@ -1,3 +1,10 @@
+1.6.0 / 2019-08-22
+==================
+
+* Add LHD to the setup wizard.
+* Add targetDL support.
+* Show fallback weight in case of no profitability data.
+
 1.5.1 / 2019-08-14
 ==================
 
