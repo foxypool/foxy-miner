@@ -22,7 +22,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "@sentry/integrations": "^5.6.1",
-    "@sentry/node": "^5.6.1",
+    "@sentry/node": "^5.6.2",
     "bignumber.js": "^9.0.0",
     "chalk": "^2.4.2",
     "commander": "^3.0.0",
