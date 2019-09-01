@@ -72,8 +72,9 @@ if (program.config) {
 
   const singleProxy = minerConfigs.length === 1;
   const proxies = await Promise.all(minerConfigs.map(async (minerConfig, index) => {
+    const proxyIndex = index + 1;
     const enabledUpstreams = minerConfig.upstreams.filter(upstreamConfig => !upstreamConfig.disabled);
-    const proxy = new Proxy(enabledUpstreams, singleProxy ? false : index + 1);
+    const proxy = new Proxy(enabledUpstreams, proxyIndex, !singleProxy);
     await proxy.init();
 
     const endpoint = singleProxy ? '/burst' : `/${index + 1}/burst`;
@@ -139,10 +140,10 @@ if (program.config) {
     let miner = null;
     switch (minerConfig.minerType) {
       case 'scavenger':
-        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath);
+        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath, proxyIndex);
         break;
       case 'conqueror':
-        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath);
+        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath, proxyIndex);
         break;
     }
 
