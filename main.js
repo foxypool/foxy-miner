@@ -73,8 +73,25 @@ if (program.config) {
   const singleProxy = minerConfigs.length === 1;
   const proxies = await Promise.all(minerConfigs.map(async (minerConfig, index) => {
     const proxyIndex = index + 1;
+
+    let miner = null;
+    switch (minerConfig.minerType) {
+      case 'scavenger':
+        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath, proxyIndex);
+        break;
+      case 'conqueror':
+        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath, proxyIndex);
+        break;
+    }
+
     const enabledUpstreams = minerConfig.upstreams.filter(upstreamConfig => !upstreamConfig.disabled);
-    const proxy = new Proxy(enabledUpstreams, proxyIndex, !singleProxy);
+    const proxy = new Proxy({
+      upstreamConfigs: enabledUpstreams,
+      proxyIndex,
+      showProxyIndex: !singleProxy,
+      miner,
+    });
+    miner.proxy = proxy;
     await proxy.init();
 
     const endpoint = singleProxy ? '/burst' : `/${index + 1}/burst`;
@@ -137,16 +154,6 @@ if (program.config) {
       }
     });
 
-    let miner = null;
-    switch (minerConfig.minerType) {
-      case 'scavenger':
-        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath, proxyIndex);
-        break;
-      case 'conqueror':
-        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath, proxyIndex);
-        break;
-    }
-
     return {
       miner,
       proxy,
@@ -178,7 +185,7 @@ if (program.config) {
 
   if (config.config.runIdleBinPath && singleProxy) {
     const idleProgram = new IdleProgram(config.config.runIdleBinPath, config.config.runIdleKillBinPath);
-    eventBus.subscribe('miner/new-round', () => idleProgram.stop());
-    eventBus.subscribe('miner/all-rounds-finished', () => idleProgram.start());
+    proxies[0].miner.subscribe('new-round', () => idleProgram.stop());
+    proxies[0].miner.subscribe('all-rounds-finished', () => idleProgram.start());
   }
 })();
