@@ -76,7 +76,7 @@ if (program.config) {
     const proxy = new Proxy(enabledUpstreams, singleProxy ? false : index + 1);
     await proxy.init();
 
-    const endpoint = singleProxy ? '/burst' : `${index + 1}/burst`;
+    const endpoint = singleProxy ? '/burst' : `/${index + 1}/burst`;
     router.get(endpoint, (ctx) => {
       const requestType = ctx.query.requestType;
       switch (requestType) {
