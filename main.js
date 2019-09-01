@@ -64,68 +64,93 @@ if (program.config) {
     await profitabilityService.init();
   }
 
-  const enabledUpstreams = config.upstreams.filter(upstreamConfig => !upstreamConfig.disabled);
-  const proxy = new Proxy(enabledUpstreams);
-  await proxy.init();
+  const minerConfigs = config.miner ? config.miner : [{
+    upstreams: config.upstreams,
+    minerBinPath: config.minerBinPath,
+    minerType: config.minerType,
+  }];
 
-  router.get('/burst', (ctx) => {
-    const requestType = ctx.query.requestType;
-    switch (requestType) {
-      case 'getMiningInfo':
-        ctx.body = proxy.getMiningInfo();
-        break;
-      default:
-        eventBus.publish('log/error', `Unknown requestType ${requestType} with data: ${JSON.stringify(ctx.params)}. Please message this info to the creator of this software.`);
-        ctx.status = 400;
-        ctx.body = {
-          error: {
-            message: 'unknown request type',
-            code: 4,
-          },
-        };
-    }
-  });
-  router.post('/burst', async (ctx) => {
-    const requestType = ctx.query.requestType;
-    switch (requestType) {
-      case 'getMiningInfo':
-        ctx.body = proxy.getMiningInfo();
-        break;
-      case 'submitNonce':
-        const options = {
-          ip: ctx.request.ip,
-          maxScanTime: ctx.params.maxScanTime,
-          minerName: ctx.req.headers['x-minername'] || ctx.req.headers['x-miner'],
-          userAgent: ctx.req.headers['user-agent'],
-          miner: ctx.req.headers['x-miner'],
-          capacity: ctx.req.headers['x-capacity'],
-          accountKey: ctx.req.headers['x-account'],
-          accountName: ctx.req.headers['x-accountname'] || ctx.req.headers['x-mineralias'] || null,
-          color: ctx.req.headers['x-color'] || null,
-        };
-        const submissionObj = {
-          accountId: ctx.query.accountId,
-          blockheight: ctx.query.blockheight,
-          nonce: ctx.query.nonce,
-          deadline: ctx.query.deadline,
-          secretPhrase: ctx.query.secretPhrase !== '' ? ctx.query.secretPhrase : null,
-        };
-        ctx.body = await proxy.submitNonce(submissionObj, options);
-        if (ctx.body.error) {
+  const singleProxy = minerConfigs.length === 1;
+  const proxies = await Promise.all(minerConfigs.map(async (minerConfig, index) => {
+    const enabledUpstreams = minerConfig.upstreams.filter(upstreamConfig => !upstreamConfig.disabled);
+    const proxy = new Proxy(enabledUpstreams, singleProxy ? false : index + 1);
+    await proxy.init();
+
+    const endpoint = singleProxy ? '/burst' : `${index + 1}/burst`;
+    router.get(endpoint, (ctx) => {
+      const requestType = ctx.query.requestType;
+      switch (requestType) {
+        case 'getMiningInfo':
+          ctx.body = proxy.getMiningInfo();
+          break;
+        default:
+          eventBus.publish('log/error', `Unknown requestType ${requestType} with data: ${JSON.stringify(ctx.params)}. Please message this info to the creator of this software.`);
           ctx.status = 400;
-        }
+          ctx.body = {
+            error: {
+              message: 'unknown request type',
+              code: 4,
+            },
+          };
+      }
+    });
+    router.post(endpoint, async (ctx) => {
+      const requestType = ctx.query.requestType;
+      switch (requestType) {
+        case 'getMiningInfo':
+          ctx.body = proxy.getMiningInfo();
+          break;
+        case 'submitNonce':
+          const options = {
+            ip: ctx.request.ip,
+            maxScanTime: ctx.params.maxScanTime,
+            minerName: ctx.req.headers['x-minername'] || ctx.req.headers['x-miner'],
+            userAgent: ctx.req.headers['user-agent'],
+            miner: ctx.req.headers['x-miner'],
+            capacity: ctx.req.headers['x-capacity'],
+            accountKey: ctx.req.headers['x-account'],
+            accountName: ctx.req.headers['x-accountname'] || ctx.req.headers['x-mineralias'] || null,
+            color: ctx.req.headers['x-color'] || null,
+          };
+          const submissionObj = {
+            accountId: ctx.query.accountId,
+            blockheight: ctx.query.blockheight,
+            nonce: ctx.query.nonce,
+            deadline: ctx.query.deadline,
+            secretPhrase: ctx.query.secretPhrase !== '' ? ctx.query.secretPhrase : null,
+          };
+          ctx.body = await proxy.submitNonce(submissionObj, options);
+          if (ctx.body.error) {
+            ctx.status = 400;
+          }
+          break;
+        default:
+          eventBus.publish('log/error', `Unknown requestType ${requestType} with data: ${JSON.stringify(ctx.params)}. Please message this info to the creator of this software.`);
+          ctx.status = 400;
+          ctx.body = {
+            error: {
+              message: 'unknown request type',
+              code: 4,
+            },
+          };
+      }
+    });
+
+    let miner = null;
+    switch (minerConfig.minerType) {
+      case 'scavenger':
+        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath);
         break;
-      default:
-        eventBus.publish('log/error', `Unknown requestType ${requestType} with data: ${JSON.stringify(ctx.params)}. Please message this info to the creator of this software.`);
-        ctx.status = 400;
-        ctx.body = {
-          error: {
-            message: 'unknown request type',
-            code: 4,
-          },
-        };
+      case 'conqueror':
+        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath);
+        break;
     }
-  });
+
+    return {
+      miner,
+      proxy,
+    };
+  }));
 
   app.use(router.routes());
   app.use(router.allowedMethods());
@@ -141,21 +166,16 @@ if (program.config) {
 
   server.listen(config.listenPort, config.listenHost);
 
-  const startupLine = `Foxy-Miner ${version} initialized. Accepting connections on http://${config.listenAddr}`;
+  const startupLine = `Foxy-Miner ${version} initialized`;
   eventBus.publish('log/info', store.getUseColors() ? chalk.green(startupLine) : startupLine);
+  proxies.map((data, index) => {
+    const listenLine = `Accepting connections on http://${config.listenAddr}${singleProxy ? '' : '/' + (index + 1)}`;
+    eventBus.publish('log/info', store.getUseColors() ? chalk.blueBright(listenLine) : listenLine);
+  });
 
-  let miner = null;
-  switch (config.minerType) {
-    case 'scavenger':
-      miner = new Scavenger(config.minerBinPath, config.minerConfigPath);
-      break;
-    case 'conqueror':
-      miner = new Conqueror(config.minerBinPath, config.minerConfigPath);
-      break;
-  }
-  await miner.start();
+  await Promise.all(proxies.map(({miner}) => miner.start()));
 
-  if (config.config.runIdleBinPath) {
+  if (config.config.runIdleBinPath && singleProxy) {
     const idleProgram = new IdleProgram(config.config.runIdleBinPath, config.config.runIdleKillBinPath);
     eventBus.subscribe('miner/new-round', () => idleProgram.stop());
     eventBus.subscribe('miner/all-rounds-finished', () => idleProgram.start());
