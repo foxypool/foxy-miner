@@ -77,7 +77,7 @@ if (program.live) {
   }];
 
   const singleProxy = minerConfigs.length === 1;
-  const proxies = await Promise.all(minerConfigs.map(async (minerConfig, index) => {
+  const proxies = minerConfigs.map((minerConfig, index) => {
     const proxyIndex = index + 1;
 
     let miner = null;
@@ -98,7 +98,6 @@ if (program.live) {
       miner,
     });
     miner.proxy = proxy;
-    await proxy.init();
 
     const endpoint = singleProxy ? '/burst' : `/${index + 1}/burst`;
     router.get(endpoint, (ctx) => {
@@ -164,12 +163,14 @@ if (program.live) {
       miner,
       proxy,
     };
-  }));
+  });
 
   if (store.useDashboard) {
     dashboard.proxies = proxies.map(({proxy}) => proxy);
     dashboard.start();
   }
+
+  await Promise.all(proxies.map(({proxy}) => proxy.init()));
 
   app.use(router.routes());
   app.use(router.allowedMethods());
