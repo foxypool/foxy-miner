@@ -130,7 +130,7 @@ if (program.live) {
             minerName: ctx.req.headers['x-minername'] || ctx.req.headers['x-miner'],
             userAgent: ctx.req.headers['user-agent'],
             miner: ctx.req.headers['x-miner'],
-            capacity: ctx.req.headers['x-capacity'],
+            capacity: parseInt(ctx.req.headers['x-capacity']),
             accountKey: ctx.req.headers['x-account'],
             accountName: ctx.req.headers['x-accountname'] || ctx.req.headers['x-mineralias'] || null,
             color: ctx.req.headers['x-color'] || null,
