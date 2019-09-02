@@ -96,6 +96,7 @@ if (program.live) {
       proxyIndex,
       showProxyIndex: !singleProxy,
       miner,
+      minerColor: minerConfig.minerColor,
     });
     miner.proxy = proxy;
 
