@@ -19,14 +19,20 @@ const Conqueror = require('./lib/conqueror');
 const IdleProgram = require('./lib/idle-program');
 const startupMessage = require('./lib/startup-message');
 const profitabilityService = require('./lib/services/profitability-service');
+const dashboard = require('./lib/services/cli-dashboard');
 
 program
   .version(version)
   .option('--config <config.yaml>', 'The custom config.yaml file path')
+  .option('--live', 'Show a live dashboard with stats')
   .parse(process.argv);
 
 if (program.config) {
   store.configFilePath = program.config;
+}
+if (program.live) {
+  store.useDashboard = true;
+  dashboard.init();
 }
 
 (async () => {
@@ -159,6 +165,11 @@ if (program.config) {
       proxy,
     };
   }));
+
+  if (store.useDashboard) {
+    dashboard.proxies = proxies.map(({proxy}) => proxy);
+    dashboard.start();
+  }
 
   app.use(router.routes());
   app.use(router.allowedMethods());
