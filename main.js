@@ -74,6 +74,7 @@ if (program.live) {
     upstreams: config.upstreams,
     minerBinPath: config.minerBinPath,
     minerType: config.minerType,
+    minerOutputToConsole: config.minerOutputToConsole,
   }];
 
   const singleProxy = minerConfigs.length === 1;
@@ -83,10 +84,10 @@ if (program.live) {
     let miner = null;
     switch (minerConfig.minerType) {
       case 'scavenger':
-        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath, proxyIndex);
+        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath, minerConfig.minerOutputToConsole);
         break;
       case 'conqueror':
-        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath, proxyIndex);
+        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath, minerConfig.minerOutputToConsole);
         break;
     }
 
