@@ -70,7 +70,7 @@ if (program.live) {
     await profitabilityService.init();
   }
 
-  const minerConfigs = config.miner ? config.miner : [{
+  const minerConfigs = config.miner ? config.miner.filter(minerConfig => !minerConfig.disabled) : [{
     upstreams: config.upstreams,
     minerBinPath: config.minerBinPath,
     minerType: config.minerType,
