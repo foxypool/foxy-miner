@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - 'tags/*'
+      - 'refs/tags/*'
 name: Audit and Publish
 jobs:
   auditAndPublish:
