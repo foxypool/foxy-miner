@@ -67,7 +67,7 @@ if (program.live) {
   app.use(bodyParser());
 
   if (config.useProfitability) {
-    await profitabilityService.init();
+    await profitabilityService.init(config.useEcoBlockRewardsForProfitability);
   }
 
   const minerConfigs = config.miner ? config.miner.filter(minerConfig => !minerConfig.disabled) : [{
