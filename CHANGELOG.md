@@ -1,3 +1,9 @@
+1.8.0 / 2019-09-05
+==================
+
+* Add `doNotInterruptAbovePercent` upstream option.
+* Add `hideScanProgress` config option.
+
 1.7.1 / 2019-09-05
 ==================
 
