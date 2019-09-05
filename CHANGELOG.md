@@ -1,3 +1,14 @@
+1.7.0 / 2019-09-05
+==================
+
+* Add config switch to toggle full/eco block rewards for profitability calculation.
+* Add DISC and LHD profitability data.
+* Add submit probability.
+* Adapt profitability calculation to use new BHD block rewards.
+* Use LHD genesis base target for netDiff calculation.
+* Add cli-dashboard for live stats.
+* Add support for multiple scav/conqueror instances.
+
 1.6.0 / 2019-08-22
 ==================
 
