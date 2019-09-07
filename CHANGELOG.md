@@ -1,3 +1,9 @@
+1.9.0 / 2019-09-07
+==================
+
+* Add support for LHD mining on hdpool.
+* Fix "new" backwards incompatible mining api of hdpool.
+
 1.8.0 / 2019-09-05
 ==================
 
