@@ -1,3 +1,14 @@
+1.10.0 / 2019-10-07
+==================
+
+* Remove pool DR selection in first install wizard as the pool handles that now.
+* Drop hdpool support.
+* Add support for HDD.
+* Auto remove trailing slash in foxypool url if detected.
+* Fix BHD rate for profitability based switching.
+* Fix dynamic TargetDL for LHD.
+* Fix error when no speed information can be found in the miners output.
+
 1.9.0 / 2019-09-07
 ==================
 
