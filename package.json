@@ -30,7 +30,7 @@
     "commander": "^3.0.2",
     "cross-spawn": "^6.0.5",
     "js-yaml": "^3.13.1",
-    "koa": "^2.8.2",
+    "koa": "^2.10.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
     "lodash": "^4.17.15",
