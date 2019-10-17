@@ -1,3 +1,11 @@
+1.11.0 / 2019-10-17
+==================
+
+* Allow setting distributionRatio via a config option for foxy-pools.
+* Add LAVA pool to setup wizard.
+* Fix interruption for same upstream when using `doNotInterruptAbovePercent`.
+* Fix netDiff for BHD.
+
 1.10.0 / 2019-10-07
 ==================
 
