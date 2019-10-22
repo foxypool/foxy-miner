@@ -7,16 +7,16 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Install dependencies
-      uses: actions/npm@master
+      uses: felixbrucker/npm@master
       with:
         args: ci
     - name: Audit dependencies
-      uses: actions/npm@master
+      uses: felixbrucker/npm@master
       with:
         args: audit
     - name: Publish to npm
       if: startsWith(github.ref, 'refs/tags/')
-      uses: actions/npm@master
+      uses: felixbrucker/npm@master
       env:
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       with:
