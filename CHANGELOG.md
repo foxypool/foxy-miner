@@ -1,3 +1,11 @@
+1.12.0 / 2019-11-22
+==================
+
+* Add `allowMiningToBeHalted` upstream config option for foxy-pools.
+* Add XHD and BTB pools to setup wizard.
+* Fix multi miner bestDL aggregation for live dashboard.
+* Fix `submitProbability` for greater 100%
+
 1.11.0 / 2019-10-17
 ==================
 
