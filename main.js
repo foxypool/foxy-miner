@@ -73,6 +73,7 @@ if (program.live) {
   const minerConfigs = config.miner ? config.miner.filter(minerConfig => !minerConfig.disabled) : [{
     upstreams: config.upstreams,
     minerBinPath: config.minerBinPath,
+    minerConfigPath: config.minerConfigPath,
     minerType: config.minerType,
     minerOutputToConsole: config.minerOutputToConsole,
   }];
