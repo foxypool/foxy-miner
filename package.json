@@ -1,6 +1,6 @@
 {
   "name": "foxy-miner",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "A scavenger / conqueror wrapper for collision free multi mining.",
   "keywords": [
     "burst",
