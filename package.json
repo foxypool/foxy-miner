@@ -25,7 +25,7 @@
     "@sentry/node": "^5.9.0",
     "bignumber.js": "^9.0.0",
     "bitmart-api": "^1.1.1",
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "cli-table3": "^0.5.1",
     "log-update": "^3.3.0",
     "commander": "^3.0.2",
