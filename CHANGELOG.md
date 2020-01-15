@@ -1,3 +1,11 @@
+1.13.0 / 2020-01-15
+==================
+
+* Add support for nodejs v12.
+* Favor configured weight over profitability based weight.
+* Add `minWeight` config option to only mine coins above a minimum weight.
+* Add support for halting BTB mining when supplying a BTB `walletUrl` and the plotterId is over capacity.
+
 1.12.1 / 2019-11-30
 ==================
 
