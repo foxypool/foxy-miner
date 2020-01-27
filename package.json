@@ -33,7 +33,7 @@
     "js-yaml": "^3.13.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0",
+    "koa-router": "^8.0.6",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "prompts": "^2.3.0",
