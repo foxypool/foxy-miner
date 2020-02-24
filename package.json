@@ -38,7 +38,7 @@
     "moment": "^2.24.0",
     "prompts": "^2.3.1",
     "socket.io-client": "^2.3.0",
-    "superagent": "^5.2.1"
+    "superagent": "^5.2.2"
   },
   "devDependencies": {
     "pkg": "^4.4.3"
