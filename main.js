@@ -76,6 +76,7 @@ if (program.live) {
     minerConfigPath: config.minerConfigPath,
     minerType: config.minerType,
     minerOutputToConsole: config.minerOutputToConsole,
+    assumeScannedAfter: config.config.assumeScannedAfter,
   }];
 
   const singleProxy = minerConfigs.length === 1;
@@ -98,7 +99,7 @@ if (program.live) {
       proxyIndex,
       showProxyIndex: !singleProxy,
       miner,
-      minerColor: minerConfig.minerColor,
+      minerConfig: minerConfig,
     });
     miner.proxy = proxy;
 
