@@ -103,65 +103,70 @@ if (program.live) {
     });
     miner.proxy = proxy;
 
-    const endpoint = singleProxy ? '/burst' : `/${index + 1}/burst`;
-    router.get(endpoint, (ctx) => {
-      const requestType = ctx.query.requestType;
-      switch (requestType) {
-        case 'getMiningInfo':
-          ctx.body = proxy.getMiningInfo();
-          break;
-        default:
-          eventBus.publish('log/error', `Unknown requestType ${requestType} with data: ${JSON.stringify(ctx.params)}. Please message this info to the creator of this software.`);
-          ctx.status = 400;
-          ctx.body = {
-            error: {
-              message: 'unknown request type',
-              code: 4,
-            },
-          };
-      }
-    });
-    router.post(endpoint, async (ctx) => {
-      const requestType = ctx.query.requestType;
-      switch (requestType) {
-        case 'getMiningInfo':
-          ctx.body = proxy.getMiningInfo();
-          break;
-        case 'submitNonce':
-          const options = {
-            ip: ctx.request.ip,
-            maxScanTime: ctx.params.maxScanTime,
-            minerName: ctx.req.headers['x-minername'] || ctx.req.headers['x-miner'],
-            userAgent: ctx.req.headers['user-agent'],
-            miner: ctx.req.headers['x-miner'],
-            capacity: parseInt(ctx.req.headers['x-capacity']),
-            accountKey: ctx.req.headers['x-account'],
-            accountName: ctx.req.headers['x-accountname'] || ctx.req.headers['x-mineralias'] || null,
-            color: ctx.req.headers['x-color'] || null,
-          };
-          const submissionObj = {
-            accountId: ctx.query.accountId,
-            blockheight: ctx.query.blockheight,
-            nonce: ctx.query.nonce,
-            deadline: ctx.query.deadline,
-            secretPhrase: ctx.query.secretPhrase !== '' ? ctx.query.secretPhrase : null,
-          };
-          ctx.body = await proxy.submitNonce(submissionObj, options);
-          if (ctx.body.error) {
+    const endpoints = [`/${index + 1}/burst`];
+    if (singleProxy) {
+      endpoints.unshift('/burst');
+    }
+    for (let endpoint of endpoints) {
+      router.get(endpoint, (ctx) => {
+        const requestType = ctx.query.requestType;
+        switch (requestType) {
+          case 'getMiningInfo':
+            ctx.body = proxy.getMiningInfo();
+            break;
+          default:
+            eventBus.publish('log/error', `Unknown requestType ${requestType} with data: ${JSON.stringify(ctx.params)}. Please message this info to the creator of this software.`);
             ctx.status = 400;
-          }
-          break;
-        default:
-          eventBus.publish('log/error', `Unknown requestType ${requestType} with data: ${JSON.stringify(ctx.params)}. Please message this info to the creator of this software.`);
-          ctx.status = 400;
-          ctx.body = {
-            error: {
-              message: 'unknown request type',
-              code: 4,
-            },
-          };
-      }
-    });
+            ctx.body = {
+              error: {
+                message: 'unknown request type',
+                code: 4,
+              },
+            };
+        }
+      });
+      router.post(endpoint, async (ctx) => {
+        const requestType = ctx.query.requestType;
+        switch (requestType) {
+          case 'getMiningInfo':
+            ctx.body = proxy.getMiningInfo();
+            break;
+          case 'submitNonce':
+            const options = {
+              ip: ctx.request.ip,
+              maxScanTime: ctx.params.maxScanTime,
+              minerName: ctx.req.headers['x-minername'] || ctx.req.headers['x-miner'],
+              userAgent: ctx.req.headers['user-agent'],
+              miner: ctx.req.headers['x-miner'],
+              capacity: parseInt(ctx.req.headers['x-capacity']),
+              accountKey: ctx.req.headers['x-account'],
+              accountName: ctx.req.headers['x-accountname'] || ctx.req.headers['x-mineralias'] || null,
+              color: ctx.req.headers['x-color'] || null,
+            };
+            const submissionObj = {
+              accountId: ctx.query.accountId,
+              blockheight: ctx.query.blockheight,
+              nonce: ctx.query.nonce,
+              deadline: ctx.query.deadline,
+              secretPhrase: ctx.query.secretPhrase !== '' ? ctx.query.secretPhrase : null,
+            };
+            ctx.body = await proxy.submitNonce(submissionObj, options);
+            if (ctx.body.error) {
+              ctx.status = 400;
+            }
+            break;
+          default:
+            eventBus.publish('log/error', `Unknown requestType ${requestType} with data: ${JSON.stringify(ctx.params)}. Please message this info to the creator of this software.`);
+            ctx.status = 400;
+            ctx.body = {
+              error: {
+                message: 'unknown request type',
+                code: 4,
+              },
+            };
+        }
+      });
+    }
 
     return {
       miner,
