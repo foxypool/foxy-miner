@@ -1,13 +1,10 @@
 {
   "name": "foxy-miner",
-  "version": "1.13.0",
+  "version": "1.14.0",
   "description": "A scavenger / conqueror wrapper for collision free multi mining.",
   "keywords": [
     "burst",
     "bhd",
-    "boom",
-    "disc",
-    "lhd",
     "poc",
     "scavenger",
     "conqueror",
@@ -15,7 +12,8 @@
     "collision-free",
     "mining",
     "foxyminer",
-    "foxy"
+    "foxy",
+    "foxypool"
   ],
   "repository": "https://github.com/felixbrucker/foxy-miner.git",
   "bugs": "https://github.com/felixbrucker/foxy-miner/issues",

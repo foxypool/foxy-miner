@@ -1,3 +1,13 @@
+1.14.0 / 2020-03-22
+==================
+
+* Rename the default config file to foxy-miner.yaml
+* Add AETH to pool list for setup wizard
+* Listen on /1 for single miner setups as well
+* Fix `assumeScannedAfter` option
+* Fix old rounds of unused upstreams never getting removed if they were never fully scanned
+* Fix configured weight not favored over profitability based weight in some cases
+
 1.13.0 / 2020-01-15
 ==================
 
