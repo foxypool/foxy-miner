@@ -23,7 +23,7 @@ const dashboard = require('./lib/services/cli-dashboard');
 
 program
   .version(version)
-  .option('--config <config.yaml>', 'The custom config.yaml file path')
+  .option('--config <foxy-miner.yaml>', 'The custom foxy miner config.yaml file path')
   .option('--live', 'Show a live dashboard with stats')
   .parse(process.argv);
 
