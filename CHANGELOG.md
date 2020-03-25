@@ -1,3 +1,8 @@
+1.14.1 / 2020-03-25
+==================
+
+* Fix `assumeScannedAfter` marking unfinished rounds as finished
+
 1.14.0 / 2020-03-22
 ==================
 
