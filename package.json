@@ -19,8 +19,8 @@
   "bugs": "https://github.com/felixbrucker/foxy-miner/issues",
   "license": "GPL-3.0",
   "dependencies": {
-    "@sentry/integrations": "^5.15.0",
-    "@sentry/node": "^5.15.0",
+    "@sentry/integrations": "^5.15.4",
+    "@sentry/node": "^5.15.4",
     "bignumber.js": "^9.0.0",
     "bitmart-api": "^1.1.1",
     "chalk": "^3.0.0",
@@ -30,7 +30,7 @@
     "cross-spawn": "^7.0.1",
     "js-yaml": "^3.13.1",
     "koa": "^2.11.0",
-    "koa-bodyparser": "^4.2.1",
+    "koa-bodyparser": "^4.3.0",
     "koa-router": "^8.0.8",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
@@ -39,7 +39,7 @@
     "superagent": "^5.2.2"
   },
   "devDependencies": {
-    "pkg": "^4.4.4"
+    "pkg": "^4.4.5"
   },
   "bin": {
     "foxy-miner": "./main.js"
