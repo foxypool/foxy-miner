@@ -1,3 +1,8 @@
+1.14.2 / 2020-04-01
+==================
+
+* Use new mining endpoints for config generation
+
 1.14.1 / 2020-03-25
 ==================
 
