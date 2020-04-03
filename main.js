@@ -187,7 +187,7 @@ if (program.live) {
 
   const coins = [...new Set(flatten(proxies.map(({proxy}) =>
     proxy.upstreamConfigs
-      .filter(upstreamConfig => upstreamConfig.type === 'foxypool' && upstreamConfig.coin)
+      .filter(upstreamConfig => upstreamConfig.type === 'foxypool' && upstreamConfig.coin && !upstreamConfig.url)
       .map(upstreamConfig => upstreamConfig.coin.toUpperCase())
   )))];
   if (coins.length > 0) {
