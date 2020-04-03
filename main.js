@@ -8,6 +8,8 @@ const Koa = require('koa');
 const Router = require('koa-router');
 const Sentry = require('@sentry/node');
 const program = require('commander');
+const { flatten } = require('lodash');
+
 const eventBus = require('./lib/services/event-bus');
 const logger = require('./lib/services/logger');
 const config = require('./lib/services/config');
@@ -20,6 +22,7 @@ const IdleProgram = require('./lib/idle-program');
 const startupMessage = require('./lib/startup-message');
 const profitabilityService = require('./lib/services/profitability-service');
 const dashboard = require('./lib/services/cli-dashboard');
+const foxyPoolGateway = require('./lib/services/foxy-pool-gateway');
 
 program
   .version(version)
@@ -180,6 +183,16 @@ if (program.live) {
   if (store.useDashboard) {
     dashboard.proxies = proxies.map(({proxy}) => proxy);
     dashboard.start();
+  }
+
+  const coins = [...new Set(flatten(proxies.map(({proxy}) =>
+    proxy.upstreamConfigs
+      .filter(upstreamConfig => upstreamConfig.type === 'foxypool' && upstreamConfig.coin)
+      .map(upstreamConfig => upstreamConfig.coin.toUpperCase())
+  )))];
+  if (coins.length > 0) {
+    foxyPoolGateway.coins = coins;
+    await foxyPoolGateway.init();
   }
 
   await Promise.all(proxies.map(({proxy}) => proxy.init()));
