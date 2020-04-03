@@ -1,3 +1,8 @@
+1.15.0 / 2020-04-03
+==================
+
+* Add support for single connection foxy-pool upstreams which do not require an url to be configured
+
 1.14.2 / 2020-04-01
 ==================
 
