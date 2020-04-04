@@ -1,3 +1,8 @@
+1.16.0 / 2020-04-04
+==================
+
+* Add auto download and configuration of scavenger in first run wizard
+
 1.15.1 / 2020-04-03
 ==================
 
