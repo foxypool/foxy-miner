@@ -45,7 +45,7 @@
     "superagent": "^5.2.2"
   },
   "devDependencies": {
-    "pkg": "^4.4.5"
+    "pkg": "^4.4.6"
   },
   "bin": {
     "foxy-miner": "./main.js"
