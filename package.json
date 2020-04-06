@@ -28,7 +28,7 @@
     "cli-progress": "^3.6.1",
     "cli-table3": "^0.5.1",
     "commander": "^5.0.0",
-    "cross-spawn": "^7.0.1",
+    "cross-spawn": "^7.0.2",
     "decompress": "^4.2.1",
     "js-yaml": "^3.13.1",
     "koa": "^2.11.0",
