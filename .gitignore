@@ -61,6 +61,7 @@ typings/
 .next
 
 config.yaml
+foxy-miner.yaml
 
 .idea
 
