@@ -1,3 +1,11 @@
+1.17.0 / 2020-07-26
+==================
+
+* Add support for showing SODIUM deadlines and netDiff (@zyzzyva99)
+* Drop BOOM and LAVA from profitability calculations
+* Remove AETH and BTB Foxy-Pools from First Run Wizard
+* Fix obscure connection issues with the miner-gateway and websocket transports
+
 1.16.1 / 2020-04-06
 ==================
 
