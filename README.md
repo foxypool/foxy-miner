@@ -7,7 +7,7 @@ Foxy-Miner
 
 ## Prerequisites
 
-- nodejs >= 10, see [here](https://docs.foxypool.cf/installing-nodejs) how to install it
+- nodejs >= 12, see [here](https://docs.foxypool.cf/general/installing-nodejs) how to install it
 - scavenger
 
 ## Getting started
