@@ -76,18 +76,28 @@ if (program.live) {
     await profitabilityService.init(config.useEcoBlockRewardsForProfitability);
   }
 
-  const minerConfigs = config.miner ? config.miner.filter(minerConfig => !minerConfig.disabled) : [{
-    upstreams: config.upstreams,
-    minerBinPath: config.minerBinPath,
-    minerConfigPath: config.minerConfigPath,
-    minerType: config.minerType,
-    minerOutputToConsole: config.minerOutputToConsole,
-    assumeScannedAfter: config.config.assumeScannedAfter,
-  }];
+  let minerConfigs;
+  if (config.miner) {
+    minerConfigs = config.miner
+        .map((minerConfig, index) => ({
+          ...minerConfig,
+          index,
+        }))
+        .filter(minerConfig => !minerConfig.disabled);
+  } else {
+    minerConfigs = [{
+      upstreams: config.upstreams,
+      minerBinPath: config.minerBinPath,
+      minerConfigPath: config.minerConfigPath,
+      minerType: config.minerType,
+      minerOutputToConsole: config.minerOutputToConsole,
+      assumeScannedAfter: config.config.assumeScannedAfter,
+    }];
+  }
 
   const singleProxy = minerConfigs.length === 1;
-  const proxies = minerConfigs.map((minerConfig, index) => {
-    const proxyIndex = index + 1;
+  const proxies = minerConfigs.map((minerConfig) => {
+    const proxyIndex = (minerConfig.index || 0) + 1;
 
     let miner = null;
     switch (minerConfig.minerType) {
@@ -109,7 +119,7 @@ if (program.live) {
     });
     miner.proxy = proxy;
 
-    const endpoints = [`/${index + 1}/burst`];
+    const endpoints = [`/${proxyIndex}/burst`];
     if (singleProxy) {
       endpoints.unshift('/burst');
     }
@@ -213,8 +223,8 @@ if (program.live) {
 
   const startupLine = `Foxy-Miner ${version} initialized`;
   eventBus.publish('log/info', store.getUseColors() ? chalk.green(startupLine) : startupLine);
-  proxies.map((data, index) => {
-    const listenLine = `Accepting connections on http://${config.listenAddr}${singleProxy ? '' : '/' + (index + 1)}`;
+  proxies.map(({ proxy }) => {
+    const listenLine = `Accepting connections on http://${config.listenAddr}${singleProxy ? '' : '/' + (proxy.proxyIndex)}`;
     eventBus.publish('log/info', store.getUseColors() ? chalk.blueBright(listenLine) : listenLine);
   });
 
