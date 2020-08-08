@@ -1,3 +1,11 @@
+1.18.0 / 2020-08-08
+==================
+
+* Use fixed indexes for multi miner setups. This means if you run a multi miner setup and have one miner disabled the other miners endpoints are still counted as if it were enabled, the index is just skipped. This can be a breaking change, please adjust your miner config accordingly.
+* Add support for auto-downloading a Mac OS X compiled scavenger 1.7.8 binary
+* Remove DISC from the first run wizard as well as the profitability service
+* Use the foxypool.io domain
+
 1.17.0 / 2020-07-26
 ==================
 
