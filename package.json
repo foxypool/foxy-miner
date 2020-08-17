@@ -33,7 +33,7 @@
     "js-yaml": "^3.14.0",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
-    "koa-router": "^9.1.0",
+    "koa-router": "^9.4.0",
     "lodash": "^4.17.20",
     "log-update": "^4.0.0",
     "mkdirp": "^1.0.4",
