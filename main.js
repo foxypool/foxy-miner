@@ -9,6 +9,7 @@ const Router = require('koa-router');
 const Sentry = require('@sentry/node');
 const program = require('commander');
 const { flatten } = require('lodash');
+const { arch, platform, release } = require('os');
 
 const eventBus = require('./lib/services/event-bus');
 const logger = require('./lib/services/logger');
@@ -45,7 +46,7 @@ if (program.live) {
 
   Sentry.init({
     dsn: 'https://2c5b7b184ad44ed99fc457f4442386e9@sentry.io/1462805',
-    release: `foxy-miner@${version}`,
+    release: `Foxy-Miner@${version}`,
     attachStacktrace: true,
     integrations: [
       new Integrations.Dedupe(),
@@ -55,6 +56,12 @@ if (program.live) {
     ignoreErrors: [
       /ENOSYS/
     ],
+  });
+
+  Sentry.configureScope((scope) => {
+    scope.setTag('os.arch', arch());
+    scope.setTag('os.platform', platform());
+    scope.setTag('os.release', release());
   });
 
   process.on('unhandledRejection', (err) => {
