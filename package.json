@@ -21,7 +21,7 @@
   "dependencies": {
     "@sentry/integrations": "^5.24.2",
     "@sentry/node": "^5.24.2",
-    "bignumber.js": "^9.0.0",
+    "bignumber.js": "^9.0.1",
     "bitmart-api": "^1.2.0",
     "bytes": "^3.1.0",
     "chalk": "^4.1.0",
@@ -41,7 +41,7 @@
     "prompts": "^2.3.2",
     "request": "^2.88.2",
     "request-progress": "^3.0.0",
-    "socket.io-client": "^2.3.0",
+    "socket.io-client": "^2.3.1",
     "superagent": "^6.1.0"
   },
   "devDependencies": {
