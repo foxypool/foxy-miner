@@ -19,7 +19,7 @@
   "bugs": "https://github.com/felixbrucker/foxy-miner/issues",
   "license": "GPL-3.0",
   "dependencies": {
-    "@sentry/integrations": "^5.26.0",
+    "@sentry/integrations": "^5.27.1",
     "@sentry/node": "^5.26.0",
     "bignumber.js": "^9.0.1",
     "bitmart-api": "^1.2.0",
