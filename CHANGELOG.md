@@ -1,3 +1,10 @@
+1.20.0 / 2020-10-29
+==================
+
+* Remove `listenAddress` from first run wizard
+* Include the upstream name in scan start log lines
+* Update dependencies
+
 1.19.0 / 2020-08-30
 ==================
 
