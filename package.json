@@ -56,7 +56,7 @@
     "build": "pkg --out-path builds ."
   },
   "engines": {
-    "node": "^10 || ^12"
+    "node": ">= 10"
   },
   "pkg": {
     "targets": [
