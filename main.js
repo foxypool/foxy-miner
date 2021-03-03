@@ -7,7 +7,7 @@ const Integrations = require('@sentry/integrations');
 const Koa = require('koa');
 const Router = require('koa-router');
 const Sentry = require('@sentry/node');
-const program = require('commander');
+const { program } = require('commander');
 const { flatten } = require('lodash');
 const { arch, platform, release } = require('os');
 
@@ -31,10 +31,10 @@ program
   .option('--live', 'Show a live dashboard with stats')
   .parse(process.argv);
 
-if (program.config) {
-  store.configFilePath = program.config;
+if (program.opts().config) {
+  store.configFilePath = program.opts().config;
 }
-if (program.live) {
+if (program.opts().live) {
   store.useDashboard = true;
   dashboard.init();
 }
