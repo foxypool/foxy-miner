@@ -17,8 +17,7 @@ const config = require('./lib/services/config');
 const Proxy = require('./lib/proxy');
 const store = require('./lib/services/store');
 const version = require('./lib/version');
-const Scavenger = require('./lib/miner/scavenger');
-const Conqueror = require('./lib/miner/conqueror');
+const { getMiner } = require('./lib/miner');
 const IdleProgram = require('./lib/idle-program');
 const startupMessage = require('./lib/startup-message');
 const profitabilityService = require('./lib/services/profitability-service');
@@ -43,6 +42,8 @@ if (program.opts().live) {
   await config.init();
 
   startupMessage();
+
+  eventBus.publish('log/info', `Config loaded from ${store.configFilePath} successfully`);
 
   Sentry.init({
     dsn: 'https://2c5b7b184ad44ed99fc457f4442386e9@sentry.io/1462805',
@@ -106,15 +107,8 @@ if (program.opts().live) {
   const proxies = minerConfigs.map((minerConfig) => {
     const proxyIndex = (minerConfig.index || 0) + 1;
 
-    let miner = null;
-    switch (minerConfig.minerType) {
-      case 'scavenger':
-        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath, minerConfig.minerOutputToConsole);
-        break;
-      case 'conqueror':
-        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath, minerConfig.minerOutputToConsole);
-        break;
-    }
+    const MinerClass = getMiner({ minerType: minerConfig.minerType }).Miner;
+    const miner = new MinerClass(minerConfig.minerBinPath, minerConfig.minerConfigPath, minerConfig.minerOutputToConsole);
 
     const enabledUpstreams = minerConfig.upstreams.filter(upstreamConfig => !upstreamConfig.disabled);
     const proxy = new Proxy({
