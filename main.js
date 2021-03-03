@@ -40,6 +40,9 @@ if (program.opts().live) {
 
 (async () => {
   await config.init();
+  if (config.logToFile) {
+    logger.enableFileLogging();
+  }
 
   startupMessage();
 
