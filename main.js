@@ -112,6 +112,7 @@ if (program.opts().live) {
       minerOutputToConsole: config.minerOutputToConsole,
       assumeScannedAfter: config.config.assumeScannedAfter,
       isCpuOnly: config.config.isCpuOnly,
+      isManaged: config.config.isManaged,
     }];
   }
 
@@ -120,7 +121,7 @@ if (program.opts().live) {
     const proxyIndex = (minerConfig.index || 0) + 1;
 
     const miner = getMiner({ minerType: minerConfig.minerType });
-    if (miner.supportsManagement) {
+    if (miner.supportsManagement && minerConfig.isManaged) {
       await binaryManager.ensureMinerDownloaded({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
       configManager.ensureMinerConfigExists({
         minerType: minerConfig.minerType,
@@ -130,7 +131,37 @@ if (program.opts().live) {
       configManager.updateMinerConfig({
         minerType: minerConfig.minerType,
         config: config.config,
-        minerIndex: !!config.miner ? minerConfig.index : null, });
+        minerIndex: !!config.miner ? minerConfig.index : null,
+      });
+      const minerBinPath = binaryManager.getMinerBinaryPath({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
+      const minerConfigPath = configManager.getMinerConfigPath({
+        minerType: minerConfig.minerType,
+        minerIndex: !!config.miner ? minerConfig.index : null,
+      });
+      let updated = false;
+      if (!!config.miner) {
+        const currConfig = config.miner[minerConfig.index];
+        if (currConfig.minerBinPath !== minerBinPath) {
+          currConfig.minerBinPath = minerBinPath;
+          updated = true;
+        }
+        if (currConfig.minerConfigPath !== minerConfigPath) {
+          currConfig.minerConfigPath = minerConfigPath;
+          updated = true;
+        }
+      } else {
+        if (config.config.minerBinPath !== minerBinPath) {
+          config.config.minerBinPath = minerBinPath;
+          updated = true;
+        }
+        if (config.config.minerConfigPath !== minerConfigPath) {
+          config.config.minerConfigPath = minerConfigPath;
+          updated = true;
+        }
+      }
+      if (updated) {
+        config.save();
+      }
     }
     const minerInstance = new miner.Miner(
       minerConfig.minerBinPath,
