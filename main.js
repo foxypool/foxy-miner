@@ -162,6 +162,8 @@ if (program.opts().live) {
       if (updated) {
         config.save();
       }
+      minerConfig.minerBinPath = minerBinPath;
+      minerConfig.minerConfigPath = minerConfigPath;
     }
     const minerInstance = new miner.Miner(
       minerConfig.minerBinPath,
