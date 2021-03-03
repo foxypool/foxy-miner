@@ -23,6 +23,8 @@ const startupMessage = require('./lib/startup-message');
 const profitabilityService = require('./lib/services/profitability-service');
 const dashboard = require('./lib/services/cli-dashboard');
 const foxyPoolGateway = require('./lib/services/foxy-pool-gateway');
+const binaryManager = require('./lib/miner/binary-manager/binary-manager');
+const configManager = require('./lib/miner/config-manager/config-manager');
 
 program
   .version(version)
@@ -103,25 +105,42 @@ if (program.opts().live) {
       minerType: config.minerType,
       minerOutputToConsole: config.minerOutputToConsole,
       assumeScannedAfter: config.config.assumeScannedAfter,
+      isCpuOnly: config.config.isCpuOnly,
     }];
   }
 
   const singleProxy = minerConfigs.length === 1;
-  const proxies = minerConfigs.map((minerConfig) => {
+  const proxies = await Promise.all(minerConfigs.map(async (minerConfig) => {
     const proxyIndex = (minerConfig.index || 0) + 1;
 
-    const MinerClass = getMiner({ minerType: minerConfig.minerType }).Miner;
-    const miner = new MinerClass(minerConfig.minerBinPath, minerConfig.minerConfigPath, minerConfig.minerOutputToConsole);
+    const miner = getMiner({ minerType: minerConfig.minerType });
+    if (miner.supportsManagement) {
+      await binaryManager.ensureMinerDownloaded({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
+      configManager.ensureMinerConfigExists({
+        minerType: minerConfig.minerType,
+        config: config.config,
+        minerIndex: !!config.miner ? minerConfig.index : null,
+      });
+      configManager.updateMinerConfig({
+        minerType: minerConfig.minerType,
+        config: config.config,
+        minerIndex: !!config.miner ? minerConfig.index : null, });
+    }
+    const minerInstance = new miner.Miner(
+      minerConfig.minerBinPath,
+      minerConfig.minerConfigPath,
+      minerConfig.minerOutputToConsole
+    );
 
     const enabledUpstreams = minerConfig.upstreams.filter(upstreamConfig => !upstreamConfig.disabled);
     const proxy = new Proxy({
       upstreamConfigs: enabledUpstreams,
       proxyIndex,
       showProxyIndex: !singleProxy,
-      miner,
+      miner: minerInstance,
       minerConfig: minerConfig,
     });
-    miner.proxy = proxy;
+    minerInstance.proxy = proxy;
 
     const endpoints = [`/${proxyIndex}/burst`];
     if (singleProxy) {
@@ -189,10 +208,10 @@ if (program.opts().live) {
     }
 
     return {
-      miner,
+      miner: minerInstance,
       proxy,
     };
-  });
+  }));
 
   if (store.useDashboard) {
     dashboard.proxies = proxies.map(({proxy}) => proxy);
