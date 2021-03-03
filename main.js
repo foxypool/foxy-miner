@@ -25,6 +25,7 @@ const dashboard = require('./lib/services/cli-dashboard');
 const foxyPoolGateway = require('./lib/services/foxy-pool-gateway');
 const binaryManager = require('./lib/miner/binary-manager/binary-manager');
 const configManager = require('./lib/miner/config-manager/config-manager');
+const FirstRunWizard = require('./lib/first-run-wizard/first-run-wizard');
 
 program
   .version(version)
@@ -41,7 +42,12 @@ if (program.opts().live) {
 }
 
 (async () => {
-  await config.init();
+  const result = await config.init();
+  if (result === null) {
+    const firstRunWizard = new FirstRunWizard(store.configFilePath);
+    await firstRunWizard.run();
+    process.exit(0);
+  }
   if (config.logToFile) {
     logger.enableFileLogging();
   }
