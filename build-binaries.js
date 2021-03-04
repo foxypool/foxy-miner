@@ -8,15 +8,15 @@ const version = require('./lib/version');
 
 const targetNodeVersion = '12';
 const targets = [{
-  fileName: `foxy-miner-${version}.exe`,
+  fileName: 'foxy-miner.exe',
   platform: 'windows',
   pkgTarget: `node${targetNodeVersion}-win-x64`,
 }, {
-  fileName: `foxy-miner-${version}`,
+  fileName: 'foxy-miner',
   platform: 'linux',
   pkgTarget: `node${targetNodeVersion}-linux-x64`,
 }, {
-  fileName: `foxy-miner-${version}`,
+  fileName: 'foxy-miner',
   platform: 'macos',
   pkgTarget: `node${targetNodeVersion}-macos-x64`,
 }];
