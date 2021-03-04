@@ -6,14 +6,27 @@ const archiver = require('archiver');
 
 const version = require('./lib/version');
 
+const targetNodeVersion = '12';
+const targets = [{
+  fileName: `foxy-miner-${version}.exe`,
+  platform: 'windows',
+  pkgTarget: `node${targetNodeVersion}-win-x64`,
+}, {
+  fileName: `foxy-miner-${version}`,
+  platform: 'linux',
+  pkgTarget: `node${targetNodeVersion}-linux-x64`,
+}, {
+  fileName: `foxy-miner-${version}`,
+  platform: 'macos',
+  pkgTarget: `node${targetNodeVersion}-macos-x64`,
+}];
+
 (async () => {
   mkdirp.sync('builds');
-  await exec([ '--output', `builds/foxy-miner-${version}.exe`, '--targets', 'node12-win-x64', '.' ]);
-  await createZipArchiveWithFile(`builds/foxy-miner-${version}.exe`, 'windows');
-  await exec([ '--output', `builds/foxy-miner-${version}`, '--targets', 'node12-linux-x64', '.' ]);
-  await createZipArchiveWithFile(`builds/foxy-miner-${version}`, 'linux');
-  await exec([ '--output', `builds/foxy-miner-${version}`, '--targets', 'node12-macos-x64', '.' ]);
-  await createZipArchiveWithFile(`builds/foxy-miner-${version}`, 'macos');
+  for (let target of targets) {
+    await exec([ '--output', `builds/${target.fileName}`, '--targets', target.pkgTarget, '.' ]);
+    await createZipArchiveWithFile(`builds/${target.fileName}`, target.platform);
+  }
 })();
 
 async function createZipArchiveWithFile(filePath, platform) {
