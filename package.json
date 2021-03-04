@@ -48,7 +48,8 @@
     "superagent": "^6.1.0"
   },
   "devDependencies": {
-    "pkg": "^4.4.9"
+    "pkg": "^4.4.9",
+    "archiver": "^5.2.0"
   },
   "bin": {
     "foxy-miner": "./main.js"
@@ -56,16 +57,9 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "build": "pkg --out-path builds ."
+    "build:binaries": "node build-binaries.js"
   },
   "engines": {
     "node": ">= 10"
-  },
-  "pkg": {
-    "targets": [
-      "node12-win-x64",
-      "node12-linux-x64",
-      "node12-macos-x64"
-    ]
   }
 }

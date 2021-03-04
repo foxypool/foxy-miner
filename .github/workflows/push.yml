@@ -17,7 +17,7 @@ jobs:
     - name: Audit dependencies
       run: npm audit --production
     - name: Build binaries
-      run: npm run build
+      run: npm run build:binaries
     - name: Publish to npm
       if: startsWith(github.ref, 'refs/tags/')
       env:
