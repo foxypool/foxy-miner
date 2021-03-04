@@ -138,30 +138,6 @@ if (program.opts().live) {
         minerType: minerConfig.minerType,
         minerIndex: !!config.miner ? minerConfig.index : null,
       });
-      let updated = false;
-      if (!!config.miner) {
-        const currConfig = config.miner[minerConfig.index];
-        if (currConfig.minerBinPath !== minerBinPath) {
-          currConfig.minerBinPath = minerBinPath;
-          updated = true;
-        }
-        if (currConfig.minerConfigPath !== minerConfigPath) {
-          currConfig.minerConfigPath = minerConfigPath;
-          updated = true;
-        }
-      } else {
-        if (config.config.minerBinPath !== minerBinPath) {
-          config.config.minerBinPath = minerBinPath;
-          updated = true;
-        }
-        if (config.config.minerConfigPath !== minerConfigPath) {
-          config.config.minerConfigPath = minerConfigPath;
-          updated = true;
-        }
-      }
-      if (updated) {
-        config.save();
-      }
       minerConfig.minerBinPath = minerBinPath;
       minerConfig.minerConfigPath = minerConfigPath;
     }
