@@ -58,7 +58,7 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "build:binaries": "node build-binaries.js"
+    "package": "node bin/build-package.js"
   },
   "engines": {
     "node": ">= 10"
