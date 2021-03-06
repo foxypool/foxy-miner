@@ -59,7 +59,6 @@ if (program.opts().live) {
   Sentry.init({
     dsn: 'https://2c5b7b184ad44ed99fc457f4442386e9@sentry.io/1462805',
     release: `Foxy-Miner@${version}`,
-    attachStacktrace: true,
     integrations: [
       new Integrations.Dedupe(),
       new Integrations.ExtraErrorData(),
@@ -74,6 +73,9 @@ if (program.opts().live) {
     scope.setTag('os.arch', arch());
     scope.setTag('os.platform', platform());
     scope.setTag('os.release', release());
+    scope.setContext('Config', {
+      'Foxy-Miner': JSON.stringify(config.config, null, 2),
+    });
   });
 
   process.on('unhandledRejection', (err) => {
