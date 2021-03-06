@@ -1,3 +1,15 @@
+2.0.0 / 2021-03-06
+==================
+
+* Foxy-Miner will now manage scavenger binaries and configs itself, all config is done through the Foxy-Miner config. This applies to new configs created by the first run wizard only. Existing configs will continue to function and are not migrated
+* The Foxy-Miner config file is now stored in the home directory of the user, eg: `C:\Users\<User>\.config\foxy-miner\foxy-miner.yaml`. If this file does not exist Foxy-Miner will search for the config file in the current directory
+* Auto-detect plot files in first run wizard
+* Auto-detect GPU availability in first run wizard and adjust `gpuWorkers` based on found plot files and max memory of the GPU
+* Auto-detect CPU cores and set `cpuWorkers` based on found plot files and max cores of the CPU when no GPU is found
+* Bundle the required native module for gpu detection with the release binary in a versioned release zip archive instead of plain binaries
+* Add support for logging to file via a `logToFile` option
+* Fix miner scan progress output glitches
+
 1.20.0 / 2020-10-29
 ==================
 
