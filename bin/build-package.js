@@ -14,9 +14,10 @@ const nativeModulePaths = [
   const buildPath = join(__dirname, '..', 'build');
   mkdirp.sync(buildPath);
   const binaryFileName = `foxy-miner${process.platform === 'win32' ? '.exe' : ''}`;
-  await exec([ '--output', join(buildPath, binaryFileName), '.' ]);
+  const binaryPath = join(buildPath, binaryFileName);
+  await exec([ '--output', binaryPath, '.' ]);
   const fileList = [
-    join(buildPath, binaryFileName),
+    binaryPath,
   ];
   nativeModulePaths.forEach(nativeModulePath => {
     const fullNativeModulePath = join(__dirname, '..', 'node_modules', nativeModulePath);
@@ -35,7 +36,11 @@ async function createZipArchiveForFiles(fileList, zipFilePath) {
   const zipFileClosedPromise = new Promise(resolve => zipFileStream.once('close', resolve));
   const archive = archiver('zip', { zlib: { level: 9 } });
   archive.pipe(zipFileStream);
-  fileList.forEach(filePath => archive.append(createReadStream(filePath), { name: join(`foxy-miner-${version}`, basename(filePath)) }));
+  fileList.forEach(filePath => archive.append(createReadStream(filePath), {
+    name: basename(filePath),
+    mode: 0o755,
+    prefix: `foxy-miner-${version}`,
+  }));
   await archive.finalize();
   await zipFileClosedPromise;
   fileList.forEach(filePath => unlinkSync(filePath));
