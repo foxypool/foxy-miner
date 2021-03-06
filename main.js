@@ -17,13 +17,15 @@ const config = require('./lib/services/config');
 const Proxy = require('./lib/proxy');
 const store = require('./lib/services/store');
 const version = require('./lib/version');
-const Scavenger = require('./lib/miner/scavenger');
-const Conqueror = require('./lib/miner/conqueror');
+const { getMiner } = require('./lib/miner');
 const IdleProgram = require('./lib/idle-program');
 const startupMessage = require('./lib/startup-message');
 const profitabilityService = require('./lib/services/profitability-service');
 const dashboard = require('./lib/services/cli-dashboard');
 const foxyPoolGateway = require('./lib/services/foxy-pool-gateway');
+const binaryManager = require('./lib/miner/binary-manager/binary-manager');
+const configManager = require('./lib/miner/config-manager/config-manager');
+const FirstRunWizard = require('./lib/first-run-wizard/first-run-wizard');
 
 program
   .version(version)
@@ -40,14 +42,23 @@ if (program.opts().live) {
 }
 
 (async () => {
-  await config.init();
+  const result = await config.init();
+  if (result === null) {
+    const firstRunWizard = new FirstRunWizard(store.configFilePath);
+    await firstRunWizard.run();
+    process.exit(0);
+  }
+  if (config.logToFile) {
+    logger.enableFileLogging();
+  }
 
   startupMessage();
+
+  eventBus.publish('log/info', `Config loaded from ${store.configFilePath} successfully`);
 
   Sentry.init({
     dsn: 'https://2c5b7b184ad44ed99fc457f4442386e9@sentry.io/1462805',
     release: `Foxy-Miner@${version}`,
-    attachStacktrace: true,
     integrations: [
       new Integrations.Dedupe(),
       new Integrations.ExtraErrorData(),
@@ -62,6 +73,9 @@ if (program.opts().live) {
     scope.setTag('os.arch', arch());
     scope.setTag('os.platform', platform());
     scope.setTag('os.release', release());
+    scope.setContext('Config', {
+      'Foxy-Miner': JSON.stringify(config.config, null, 2),
+    });
   });
 
   process.on('unhandledRejection', (err) => {
@@ -99,32 +113,51 @@ if (program.opts().live) {
       minerType: config.minerType,
       minerOutputToConsole: config.minerOutputToConsole,
       assumeScannedAfter: config.config.assumeScannedAfter,
+      isCpuOnly: config.config.isCpuOnly,
+      isManaged: config.config.isManaged,
     }];
   }
 
   const singleProxy = minerConfigs.length === 1;
-  const proxies = minerConfigs.map((minerConfig) => {
+  const proxies = await Promise.all(minerConfigs.map(async (minerConfig) => {
     const proxyIndex = (minerConfig.index || 0) + 1;
 
-    let miner = null;
-    switch (minerConfig.minerType) {
-      case 'scavenger':
-        miner = new Scavenger(minerConfig.minerBinPath, minerConfig.minerConfigPath, minerConfig.minerOutputToConsole);
-        break;
-      case 'conqueror':
-        miner = new Conqueror(minerConfig.minerBinPath, minerConfig.minerConfigPath, minerConfig.minerOutputToConsole);
-        break;
+    const miner = getMiner({ minerType: minerConfig.minerType });
+    if (miner.supportsManagement && minerConfig.isManaged) {
+      await binaryManager.ensureMinerDownloaded({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
+      configManager.ensureMinerConfigExists({
+        minerType: minerConfig.minerType,
+        config: config.config,
+        minerIndex: !!config.miner ? minerConfig.index : null,
+      });
+      configManager.updateMinerConfig({
+        minerType: minerConfig.minerType,
+        config: config.config,
+        minerIndex: !!config.miner ? minerConfig.index : null,
+      });
+      const minerBinPath = binaryManager.getMinerBinaryPath({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
+      const minerConfigPath = configManager.getMinerConfigPath({
+        minerType: minerConfig.minerType,
+        minerIndex: !!config.miner ? minerConfig.index : null,
+      });
+      minerConfig.minerBinPath = minerBinPath;
+      minerConfig.minerConfigPath = minerConfigPath;
     }
+    const minerInstance = new miner.Miner(
+      minerConfig.minerBinPath,
+      minerConfig.minerConfigPath,
+      minerConfig.minerOutputToConsole
+    );
 
     const enabledUpstreams = minerConfig.upstreams.filter(upstreamConfig => !upstreamConfig.disabled);
     const proxy = new Proxy({
       upstreamConfigs: enabledUpstreams,
       proxyIndex,
       showProxyIndex: !singleProxy,
-      miner,
+      miner: minerInstance,
       minerConfig: minerConfig,
     });
-    miner.proxy = proxy;
+    minerInstance.proxy = proxy;
 
     const endpoints = [`/${proxyIndex}/burst`];
     if (singleProxy) {
@@ -192,10 +225,10 @@ if (program.opts().live) {
     }
 
     return {
-      miner,
+      miner: minerInstance,
       proxy,
     };
-  });
+  }));
 
   if (store.useDashboard) {
     dashboard.proxies = proxies.map(({proxy}) => proxy);
