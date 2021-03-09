@@ -1,6 +1,6 @@
 {
   "name": "foxy-miner",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A scavenger / conqueror wrapper for collision free multi mining.",
   "keywords": [
     "burst",
@@ -38,7 +38,7 @@
     "log-update": "^4.0.0",
     "mkdirp": "^1.0.4",
     "moment": "^2.29.1",
-    "opencl-info": "^0.2.0",
+    "opencl-info": "^0.2.2",
     "ora": "^5.3.0",
     "prompts": "^2.4.0",
     "request": "^2.88.2",

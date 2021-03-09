@@ -1,3 +1,8 @@
+2.0.1 / 2021-03-09
+==================
+
+* Fix a bug that could cause the miner to crash on startup on certain systems
+
 2.0.0 / 2021-03-06
 ==================
 
