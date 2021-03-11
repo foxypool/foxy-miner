@@ -1,3 +1,8 @@
+2.1.0 / 2021-03-11
+==================
+
+* Automatically fix invalid `plotDirs` and `listenAddr` config values
+
 2.0.1 / 2021-03-09
 ==================
 
