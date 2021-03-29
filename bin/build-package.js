@@ -6,9 +6,7 @@ const archiver = require('archiver');
 
 const version = require('../lib/version');
 
-const nativeModulePaths = [
-  'opencl-info/native/opencl-info.node',
-];
+const nativeModulePaths = [];
 
 (async () => {
   const buildPath = join(__dirname, '..', 'build');
