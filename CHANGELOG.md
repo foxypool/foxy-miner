@@ -1,3 +1,11 @@
+2.2.0 / 2021-04-02
+==================
+
+* Automatically fix all sorts of invalid and broken scavenger configs
+* Set `useGpuMemMapping` and `useGpuAsyncCompute` based on the detected gpu
+* The native module is now included in the binary, no more extra files
+* Fix invalid log message when loading the config from a custom location
+
 2.1.0 / 2021-03-11
 ==================
 
