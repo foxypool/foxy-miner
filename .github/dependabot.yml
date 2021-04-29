@@ -1,0 +1,32 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 99
+  versioning-strategy: increase
+  ignore:
+  - dependency-name: socket.io-client
+    versions:
+    - ">= 3.a, < 4"
+  - dependency-name: socket.io-client
+    versions:
+    - ">= 4.a, < 5"
+  - dependency-name: "@sentry/integrations"
+    versions:
+    - 6.0.1
+    - 6.0.3
+    - 6.1.0
+    - 6.2.0
+  - dependency-name: "@sentry/node"
+    versions:
+    - 6.0.1
+    - 6.0.3
+    - 6.1.0
+  - dependency-name: commander
+    versions:
+    - 7.0.0
+  - dependency-name: koa
+    versions:
+    - 2.13.1
