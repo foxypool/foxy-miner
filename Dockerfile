@@ -1,6 +1,5 @@
-FROM node:14-alpine
+FROM node:14-slim
 
-RUN apk update && apk add --no-cache bash
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install
