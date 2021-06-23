@@ -1,3 +1,10 @@
+2.3.0 / 2021-06-23
+==================
+
+* Update socket.io to v4 and enforce websocket transports
+* Add config option `allowLongPolling` to allow the use of long polling as socket.io transport
+* Fix missing config validation for `minerBinPath` in unmanaged mode
+
 2.2.0 / 2021-04-02
 ==================
 
