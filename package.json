@@ -27,7 +27,7 @@
     "chalk": "^4.1.1",
     "cli-progress": "^3.9.0",
     "cli-table3": "^0.6.0",
-    "commander": "^7.2.0",
+    "commander": "^8.0.0",
     "cross-spawn": "^7.0.3",
     "decompress": "^4.2.1",
     "js-yaml": "^4.1.0",
