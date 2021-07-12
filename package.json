@@ -44,7 +44,7 @@
     "request": "^2.88.2",
     "request-progress": "^3.0.0",
     "rotating-file-stream": "^2.1.5",
-    "strip-ansi": "^6.0.0",
+    "strip-ansi": "^7.0.0",
     "socket.io-client": "^4.1.3",
     "superagent": "^6.1.0"
   },
