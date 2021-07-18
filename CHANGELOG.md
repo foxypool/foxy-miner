@@ -1,3 +1,9 @@
+2.4.0 / 2021-07-18
+==================
+
+* Use SIGNA throughout instead of BURST
+* Drop HDD, LHD and XHD from the first run wizard
+
 2.3.0 / 2021-06-23
 ==================
 

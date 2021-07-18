@@ -1,10 +1,11 @@
 {
   "name": "foxy-miner",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "A scavenger / conqueror wrapper for collision free multi mining.",
   "keywords": [
-    "burst",
     "bhd",
+    "burst",
+    "signa",
     "poc",
     "scavenger",
     "conqueror",
@@ -61,6 +62,6 @@
     "package": "node bin/build-package.js"
   },
   "engines": {
-    "node": ">= 10"
+    "node": ">=12"
   }
 }
