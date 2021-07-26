@@ -50,7 +50,7 @@
     "superagent": "^6.1.0"
   },
   "devDependencies": {
-    "pkg": "^5.3.0",
+    "pkg": "^5.3.1",
     "archiver": "^5.3.0"
   },
   "bin": {
