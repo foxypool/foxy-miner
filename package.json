@@ -16,8 +16,8 @@
     "foxy",
     "foxypool"
   ],
-  "repository": "https://github.com/felixbrucker/foxy-miner.git",
-  "bugs": "https://github.com/felixbrucker/foxy-miner/issues",
+  "repository": "https://github.com/foxypool/foxy-miner.git",
+  "bugs": "https://github.com/foxypool/foxy-miner/issues",
   "license": "GPL-3.0",
   "dependencies": {
     "@sentry/integrations": "^6.10.0",

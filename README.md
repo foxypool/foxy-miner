@@ -35,8 +35,8 @@ npm update -g foxy-miner
 
 ## Changelog
 
-A Changelog can be found [here](https://github.com/felixbrucker/foxy-miner/blob/master/CHANGELOG.md)
+A Changelog can be found [here](https://github.com/foxypool/foxy-miner/blob/master/CHANGELOG.md)
 
 ## License
 
-GNU GPLv3 (see [LICENSE](https://github.com/felixbrucker/foxy-miner/blob/master/LICENSE))
+GNU GPLv3 (see [LICENSE](https://github.com/foxypool/foxy-miner/blob/master/LICENSE))
