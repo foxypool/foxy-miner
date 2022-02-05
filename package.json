@@ -1,6 +1,6 @@
 {
   "name": "foxy-miner",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "A scavenger / conqueror wrapper for collision free multi mining.",
   "keywords": [
     "bhd",
