@@ -119,12 +119,28 @@ if (program.opts().live) {
   }
 
   const singleProxy = minerConfigs.length === 1;
+  const managedMiners = minerConfigs
+    .map(minerConfig => ({
+      miner: getMiner({ minerType: minerConfig.minerType }),
+      minerConfig,
+    }))
+    .filter(({ miner, minerConfig }) => miner.supportsManagement && minerConfig.isManaged);
+  const groupedManagedMiners = managedMiners.reduce((acc, curr) => {
+    const identifier = `${curr.minerConfig.minerType}/${curr.minerConfig.isCpuOnly}`;
+    if (!acc[identifier]) {
+      acc[identifier] = curr;
+    }
+
+    return acc;
+  }, {});
+  await Promise.all(Object.values(groupedManagedMiners).map(async ({ minerConfig }) => {
+    await binaryManager.ensureMinerDownloaded({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
+  }));
   const proxies = await Promise.all(minerConfigs.map(async (minerConfig) => {
     const proxyIndex = (minerConfig.index || 0) + 1;
 
     const miner = getMiner({ minerType: minerConfig.minerType });
     if (miner.supportsManagement && minerConfig.isManaged) {
-      await binaryManager.ensureMinerDownloaded({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
       configManager.ensureMinerConfigExists({
         minerType: minerConfig.minerType,
         config: config.config,
