@@ -134,7 +134,12 @@ if (program.opts().live) {
     return acc;
   }, {});
   await Promise.all(Object.values(groupedManagedMiners).map(async ({ minerConfig }) => {
-    await binaryManager.ensureMinerDownloaded({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
+    try {
+      await binaryManager.ensureMinerDownloaded({ minerType: minerConfig.minerType, isCpuOnly: minerConfig.isCpuOnly });
+    } catch (err) {
+      eventBus.publish('log/error', `Failed to download the miner binary for type ${minerConfig.minerType} with error: ${err}`);
+      process.exit(0);
+    }
   }));
   const proxies = await Promise.all(minerConfigs.map(async (minerConfig) => {
     const proxyIndex = (minerConfig.index || 0) + 1;
