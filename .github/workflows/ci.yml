@@ -27,7 +27,7 @@ jobs:
         run: yarn run package
 
       - name: Save release archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: release-archive-${{ matrix.os }}
           path: build/*.zip
