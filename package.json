@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "archiver": "^5.3.0",
-    "pkg": "^5.5.2"
+    "pkg": "^5.7.0"
   },
   "bin": {
     "foxy-miner": "./main.js"
