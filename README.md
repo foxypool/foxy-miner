@@ -40,6 +40,3 @@ A Changelog can be found [here](https://github.com/foxypool/foxy-miner/blob/mast
 ## License
 
 GNU GPLv3 (see [LICENSE](https://github.com/foxypool/foxy-miner/blob/master/LICENSE))
-
-
-LYN5-W55W-UX7Y-5EEN
