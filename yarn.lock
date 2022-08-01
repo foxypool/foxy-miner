@@ -65,13 +65,13 @@
     "@sentry/utils" "7.1.1"
     tslib "^1.9.3"
 
-"@sentry/integrations@^7.1.1":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.1.1.tgz#e0d512e0e44bbcd1f1fab0808312615dd7aa1439"
-  integrity sha512-FAkxuY/3O9xc+1CTovouhQyHycMrWlCYZw+oB0AOJUug1Vcq+XRPNG4gRpwt/HNFGuu7VjPXvk4ZQc60g1CQww==
+"@sentry/integrations@^7.8.0":
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.8.0.tgz#d91809afd3fda44707695ea08a865292210e74f0"
+  integrity sha512-EdnkE4eIQsLH46X8HBdfG/4+M9yWMSLWNf5jebcNeYd3UtXfpkNRz10F8g/v9QpqEIHRmcD8o6vh8yVZAGO8cg==
   dependencies:
-    "@sentry/types" "7.1.1"
-    "@sentry/utils" "7.1.1"
+    "@sentry/types" "7.8.0"
+    "@sentry/utils" "7.8.0"
     localforage "^1.8.1"
     tslib "^1.9.3"
 
@@ -94,12 +94,25 @@
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.1.1.tgz#63aa68e7be36d63cc305d01af9119a4cdb186ae3"
   integrity sha512-5N1UMd2SqvUXprcIUMyDEju3H9lJY2oWfWQBGo0lG6Amn/lGAPAYlchg+4vQCLutDQMyd8K9zPwcbKn4u6gHdw==
 
+"@sentry/types@7.8.0":
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.8.0.tgz#009ee9c53b474030a6b14025a8904b6260d57484"
+  integrity sha512-X9D2jlcAzbJdCHA+eCMv2t5HI9769Qpx48e+sZiK7Oasy1jwQtqzQRaiI9fy/zZ+p7Fyerj/4WjW/E2c4dJ63w==
+
 "@sentry/utils@7.1.1":
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.1.1.tgz#7174a1439f8970510207fa7587385119397e1718"
   integrity sha512-DPRHDf3InfyVgmxToE4Z+AATAR4OVm+wsXDLFGGyncR91CE1x4wLQKOcAJJwX3F0Hz1VHENfmx1DvyYTHOrC/A==
   dependencies:
     "@sentry/types" "7.1.1"
+    tslib "^1.9.3"
+
+"@sentry/utils@7.8.0":
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.8.0.tgz#ed9b9a607fa51125a48140b1ea836603202d3cc2"
+  integrity sha512-6WvXawUPs60R9MitHXFL533D/Ic9tqQZbvPnBXmAkfp90Y5rcoq2QfJjkqMk/Z+Gnplwi8/wcJCC8EtYKfWg6w==
+  dependencies:
+    "@sentry/types" "7.8.0"
     tslib "^1.9.3"
 
 "@socket.io/component-emitter@~3.1.0":
