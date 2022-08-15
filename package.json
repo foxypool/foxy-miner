@@ -22,7 +22,7 @@
   "dependencies": {
     "@sentry/integrations": "^7.1.1",
     "@sentry/node": "^7.1.1",
-    "bignumber.js": "^9.0.2",
+    "bignumber.js": "^9.1.0",
     "bytes": "^3.1.2",
     "chalk": "^4.1.2",
     "cli-progress": "^3.11.1",
