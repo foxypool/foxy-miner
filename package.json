@@ -46,7 +46,7 @@
     "rotating-file-stream": "^3.0.4",
     "socket.io-client": "^4.5.2",
     "strip-ansi": "^6.0.1",
-    "superagent": "^7.1.6"
+    "superagent": "^8.0.2"
   },
   "devDependencies": {
     "archiver": "^5.3.1",
