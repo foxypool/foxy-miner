@@ -109,13 +109,13 @@
     "@sentry/utils" "7.15.0"
     tslib "^1.9.3"
 
-"@sentry/integrations@^7.15.0":
-  version "7.15.0"
-  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.15.0.tgz#c2af3a2d2c0667216d76d829f24c5125b110e6c8"
-  integrity sha512-BGQynB/V4NDkFKAE4acolISNC2R3KWAXgo7DrTosqt/0FEqy96YhZrkqsnyqpAY5nRxMEdpDwEWR+eITlzNTrg==
+"@sentry/integrations@^7.28.1":
+  version "7.28.1"
+  resolved "https://registry.yarnpkg.com/@sentry/integrations/-/integrations-7.28.1.tgz#f0cba627b9ed03f1a54d91385126019f332a575d"
+  integrity sha512-opeXVR1L9mZmZcpAs9kX+4JPY7pXhVupy17Sbz+43zd5CshYTveIcttGNPp+EPT3j7mMU+1TMAYZspKqJXtEBQ==
   dependencies:
-    "@sentry/types" "7.15.0"
-    "@sentry/utils" "7.15.0"
+    "@sentry/types" "7.28.1"
+    "@sentry/utils" "7.28.1"
     localforage "^1.8.1"
     tslib "^1.9.3"
 
@@ -137,12 +137,25 @@
   resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.15.0.tgz#50c57c924993d4dd16b43172d310c66384d17463"
   integrity sha512-MN9haDRh9ZOsTotoDTHu2BT3sT8Vs1F0alhizUpDyjN2YgBCqR6JV+AbAE1XNHwS2+5zbppch1PwJUVeE58URQ==
 
+"@sentry/types@7.28.1":
+  version "7.28.1"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.28.1.tgz#9018b4c152b475de9bedd267237393d3c9b1253d"
+  integrity sha512-DvSplMVrVEmOzR2M161V5+B8Up3vR71xMqJOpWTzE9TqtFJRGPtqT/5OBsNJJw1+/j2ssMcnKwbEo9Q2EGeS6g==
+
 "@sentry/utils@7.15.0":
   version "7.15.0"
   resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.15.0.tgz#cda642a353a58fd6631979c1e5986788e6db6c43"
   integrity sha512-akic22/6xa/RG5Mj7UN6pLc23VnX9zQlKM53L/q3yIr0juckSVthJiiFNdgdqrX03S1tHYlBgPeShKFFTHpkjA==
   dependencies:
     "@sentry/types" "7.15.0"
+    tslib "^1.9.3"
+
+"@sentry/utils@7.28.1":
+  version "7.28.1"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.28.1.tgz#0a7b6aa4b09e91e4d1aded2a8c8dbaf818cee96e"
+  integrity sha512-75/jzLUO9HH09iC9TslNimGbxOP3jgn89P+q7uR+rp2fJfRExHVeKJZQdK0Ij4/SmE7TJ3Uh2r154N0INZEx1g==
+  dependencies:
+    "@sentry/types" "7.28.1"
     tslib "^1.9.3"
 
 "@socket.io/component-emitter@~3.1.0":
