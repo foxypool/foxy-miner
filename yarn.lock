@@ -2330,10 +2330,10 @@ rimraf@^3.0.2:
   dependencies:
     glob "^7.1.3"
 
-rotating-file-stream@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/rotating-file-stream/-/rotating-file-stream-3.0.4.tgz#158e21aa229020b1443607e771c634f00bd7bbf1"
-  integrity sha512-Zd+IA5soqBUKtCa7KfMRnF7GKEaRav/dJFU7UHc+r1FMd8VvMLUFE0q1HX5s6XJO1cZ6jAqtTa/ZFnjc7IqlJA==
+rotating-file-stream@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/rotating-file-stream/-/rotating-file-stream-3.1.0.tgz#6cf50e1671de82a396de6d31d39a6f2445f45fba"
+  integrity sha512-TkMF6cP1/QDcon9D71mjxHoflNuznNOrY5JJQfuxkKklZRmoow/lWBLNxXVjb6KcjAU8BDCV145buLgOx9Px1Q==
 
 run-async@^2.4.0:
   version "2.4.1"
